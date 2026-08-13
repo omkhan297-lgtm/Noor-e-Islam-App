@@ -23,10 +23,16 @@ jobs:
           flutter-version: '3.19.x'
           channel: 'stable'
 
-      - name: Create Android Structure
-        run: flutter create . --platforms=android --org com.nooreislam
+      - name: Generate Complete Flutter Structure
+        run: |
+          mkdir -p ../app_backup
+          cp -r lib ../app_backup/ || true
+          rm -rf * .github
+          flutter create --org com.nooreislam --project-name noor_e_islam .
+          cp -r ../app_backup/lib .
+          mkdir -p .github/workflows
 
-      - name: Install Dependencies
+      - name: Get Dependencies
         run: flutter pub get
 
       - name: Build APK
